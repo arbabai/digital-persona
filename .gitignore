@@ -39,3 +39,7 @@ Thumbs.db
 
 # AWS
 .aws/
+
+#Visual Studio
+.vs/
+help/
