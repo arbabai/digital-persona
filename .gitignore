@@ -36,10 +36,9 @@ venv/
 *.swp
 .DS_Store
 Thumbs.db
+.vs/
 
 # AWS
 .aws/
 
-#Visual Studio
-.vs/
 help/

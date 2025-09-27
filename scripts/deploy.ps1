@@ -1,5 +1,5 @@
 param(
-    [string]$Environment = "dev",   # dev | test | prod
+    [string]$Environment = "test",   # dev | test | prod
     [string]$ProjectName = "twin"
 )
 $ErrorActionPreference = "Stop"
@@ -15,7 +15,14 @@ Set-Location ..
 
 # 2. Terraform workspace & apply
 Set-Location terraform
-terraform init -input=false
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+AWS_REGION=${DEFAULT_AWS_REGION:-us-west-2}
+terraform init -input=false \
+  -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
+  -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
+  -backend-config="region=${AWS_REGION}" \
+  -backend-config="dynamodb_table=twin-terraform-locks" \
+  -backend-config="encrypt=true"
 
 if (-not (terraform workspace list | Select-String $Environment)) {
     terraform workspace new $Environment
