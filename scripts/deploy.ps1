@@ -24,14 +24,9 @@ if (-not (terraform workspace list | Select-String $Environment)) {
 }
 
 if ($Environment -eq "prod") {
-    terraform apply -var-file=prod.tfvars `
-                    -var="project_name=$ProjectName" `
-                    -var="environment=$Environment" `
-                    -auto-approve
+    terraform apply -var-file=prod.tfvars -var="project_name=$ProjectName" -var="environment=$Environment" -auto-approve
 } else {
-    terraform apply -var="project_name=$ProjectName" `
-                    -var="environment=$Environment" `
-                    -auto-approve
+    terraform apply -var="project_name=$ProjectName" -var="environment=$Environment" -auto-approve
 }
 
 $ApiUrl        = terraform output -raw api_gateway_url
