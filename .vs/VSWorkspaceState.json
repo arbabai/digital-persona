@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\help",
+    "\\scripts",
     "\\terraform"
   ],
-  "SelectedNode": "\\.env.example",
+  "SelectedNode": "\\terraform\\github-oidc.tf",
   "PreviewInSolutionExplorer": false
 }
